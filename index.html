@@ -288,56 +288,43 @@
 
     <section id="links-uteis" class="links-uteis">
         <h2>Links Úteis</h2>
-               <div class="link-item"><a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp" target="_blank">Consulta CNPJ</a></div>
-        <div class="link-item"><a href="https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp" target="_blank">Consulta CPF</a></div>
-        <div class="link-item"><a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank">E-CAC</a></div>
-        <div class="link-item"><a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor/servicos-para-mei" target="_blank">Portal do MEI</a></div>
-        <div class="link-item"><a href="https://www.nfse.gov.br/EmissorNacional/Login?ReturnUrl=%2FEmissorNacional" target="_blank">Emissor NFS- Nacional</a></div>
+         <div class="link-item"><a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp" target="_blank">Consulta CNPJ</a></div>
+         <div class="link-item"><a href="https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp" target="_blank">Consulta CPF</a></div>
+         <div class="link-item"><a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank">E-CAC</a></div>
+         <div class="link-item"><a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor/servicos-para-mei" target="_blank">Portal do MEI</a></div>
+		 <div class="link-item"><a href="https://www.nfse.gov.br/EmissorNacional/Login?ReturnUrl=%2FEmissorNacional" target="_blank">Emissor NFS- Nacional</a></div>
     </section>
 
     <section id="contato" class="contato">
         <h2>Contato</h2>
-        <p>Para mais informações, entre em contato conosco!</p>
+        <p>Para mais informações, entre em contato conosco:</p>
         <button class="whatsapp-button" onclick="openWhatsApp()">WhatsApp</button>
-        <button class="email-button" onclick="openEmail()">E-mail</button>
+        <button class="email-button" onclick="sendEmail()">E-mail</button>
     </section>
 
     <footer>
-        <p>&copy; 2024 D R Acessoria Contábil. Todos os direitos reservados.</p>
+        <p>&copy; 2024 D R Acessoria Contábil - Todos os direitos reservados.</p>
         <div class="social-media">
-            <a href="https://www.instagram.com/contabilidade.dr.assessoria" target="_blank">Instagram</a>
+            <a href="https://www.instagram.com/contabilidade.dr.assessoria?igsh=ZnJ0YzQ3NW5jbnhu" target="_blank">Instagram</a>
         </div>
     </footer>
 
-    <!-- Modal para serviços -->
-    <div id="service-modal" class="modal">
+    <!-- Modal para solicitação de nome -->
+    <div class="modal" id="nameModal">
         <div class="modal-content">
-            <h3 id="service-title"></h3>
-            <input type="text" id="client-name" placeholder="Digite seu nome">
-            <button onclick="sendWhatsApp()">Enviar para WhatsApp</button>
-            <button class="close-button" onclick="closeModal('service-modal')">Fechar</button>
+            <h3>Informe seu Nome</h3>
+            <input type="text" id="clientName" placeholder="Seu Nome" />
+            <button onclick="sendToWhatsApp()">Enviar</button>
+            <button class="close-button" onclick="closeModal('nameModal')">Fechar</button>
         </div>
     </div>
 
-    <!-- Modal para formas de pagamento -->
-    <div id="payment-modal" class="modal">
+    <!-- Modal para informações de pagamento -->
+    <div class="modal" id="paymentModal">
         <div class="modal-content">
-            <h3 id="payment-title"></h3>
-            <p>Informações sobre a forma de pagamento selecionada.</p>
-            <button class="close-button" onclick="closeModal('payment-modal')">Fechar</button>
-        </div>
-    </div>
-
-    <!-- Modal para links úteis -->
-    <div id="links-modal" class="modal">
-        <div class="modal-content">
-            <h3>Links Úteis</h3>
-            <p>Selecione um link:</p>
-            <div class="link-item"><a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp" target="_blank">Consulta CNPJ</a></div>
-            <div class="link-item"><a href="https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp" target="_blank">Consulta CPF</a></div>
-            <div class="link-item"><a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank">Portal E-cac</a></div>
-            <div class="link-item"><a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor/servicos-para-mei" target="_blank">Portal do MEI</a></div>
-            <button class="close-button" onclick="closeModal('links-modal')">Fechar</button>
+            <h3 id="paymentTitle"></h3>
+            <p id="paymentInfo"></p>
+            <button class="close-button" onclick="closeModal('paymentModal')">Fechar</button>
         </div>
     </div>
 
@@ -347,46 +334,73 @@
             sections.forEach(section => {
                 section.style.display = 'none';
             });
+
             document.getElementById(sectionId).style.display = 'block';
         }
 
-        function openServiceModal(serviceName) {
-            document.getElementById('service-title').innerText = serviceName;
-            document.getElementById('service-modal').style.display = 'flex';
+        function openServiceModal(service) {
+            document.getElementById('clientName').value = ''; // Limpar o campo de nome
+            openModal('nameModal');
         }
 
-        function sendWhatsApp() {
-            const name = document.getElementById('client-name').value;
-            if (name) {
-                const message = encodeURIComponent(`Olá, meu nome é ${name}. Gostaria de mais informações sobre os serviços prestados.`);
-                const whatsappUrl = `https://wa.me/5522999845104?text=${message}`;
-                window.open(whatsappUrl, '_blank');
-                closeModal('service-modal');
-            } else {
-                alert('Por favor, digite seu nome antes de continuar.');
-            }
+        function openWhatsApp() {
+            openModal('nameModal');
         }
 
-        function showPaymentInfo(paymentMethod) {
-            document.getElementById('payment-title').innerText = `Informações sobre ${paymentMethod}`;
-            document.getElementById('payment-modal').style.display = 'flex';
+        function sendEmail() {
+            window.location.href = 'mailto:dr.servcont@gmail.com';
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
         }
 
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
 
-        function openWhatsApp() {
-            window.open('https://wa.me/5522999845104', '_blank');
+        function showPaymentInfo(paymentMethod) {
+            let title = '';
+            let info = '';
+
+            switch(paymentMethod) {
+                case 'Pix':
+                    title = 'Pagamento via Pix';
+                    info = 'Com o Pix, você realiza transferências instantâneas a qualquer hora e dia da semana, de forma rápida e segura.';
+                    break;
+                case 'Cartão de Crédito':
+                    title = 'Pagamento com Cartão de Crédito';
+                    info = 'Aceitamos todas as bandeiras de cartões de crédito, permitindo parcelamento em até 12 vezes.';
+                    break;
+                case 'Dinheiro':
+                    title = 'Pagamento em Dinheiro';
+                    info = 'Aceitamos pagamentos em dinheiro, facilitando a negociação e a compra dos nossos serviços.';
+                    break;
+                case 'Boleto':
+                    title = 'Pagamento por Boleto';
+                    info = 'O pagamento via boleto bancário é uma opção segura e prática, com prazo de vencimento flexível.';
+                    break;
+            }
+
+            document.getElementById('paymentTitle').textContent = title;
+            document.getElementById('paymentInfo').textContent = info;
+            openModal('paymentModal');
         }
 
-        function openEmail() {
-            window.open('mailto:dr.servcont@gmail.com');
+        function sendToWhatsApp() {
+            const clientName = document.getElementById('clientName').value;
+            const message = `Olá, meu nome é ${clientName}. Gostaria de mais informações sobre os serviços.`;
+            const whatsappNumber = '+5522999845104'; // Telefone do WhatsApp
+
+            // Codifica a mensagem para a URL do WhatsApp
+            const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappLink, '_blank');
+
+            closeModal('nameModal');
         }
 
-        // Mostra a seção inicial
+        // Exibir a seção inicial ao carregar a página
         showSection('home');
     </script>
 </body>
 </html>
-
