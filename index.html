@@ -82,24 +82,25 @@
             margin: 20px 0;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Todas as seções ficam ocultas inicialmente */
         }
 
-        .servicos ul, .pagamentos ul {
+        .servicos ul {
             list-style: none;
             padding: 0;
         }
 
-        .servicos ul li, .pagamentos ul li {
+        .servicos ul li {
             margin-bottom: 15px;
         }
 
-        .servicos ul li a, .pagamentos ul li a {
+        .servicos ul li a {
             color: #d4af37;
             font-weight: bold;
             text-decoration: none;
         }
 
-        .servicos ul li a:hover, .pagamentos ul li a:hover {
+        .servicos ul li a:hover {
             color: #4d4038;
         }
 
@@ -185,7 +186,7 @@
             color: #4d4038;
         }
 
-        .whatsapp-button {
+        .whatsapp-button, .email-button {
             padding: 10px 20px;
             background-color: #d4af37;
             border: none;
@@ -196,29 +197,26 @@
             margin-top: 20px;
         }
 
-        .whatsapp-button:hover {
+        .whatsapp-button:hover, .email-button:hover {
             background-color: #4d4038;
         }
 
-        .fale-conosco-button {
-            padding: 10px 20px;
-            background-color: #d4af37;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
+        .pagamentos ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pagamentos ul li {
+            margin-bottom: 15px;
             font-weight: bold;
-            margin-top: 10px;
+            cursor: pointer;
+            color: #d4af37;
         }
 
-        .fale-conosco-button:hover {
-            background-color: #4d4038;
+        .pagamentos ul li:hover {
+            color: #4d4038;
         }
 
-        .pagamento-modal-content {
-            background-color: #f9f9f9;
-            border: 2px solid #d4af37;
-        }
     </style>
 </head>
 <body>
@@ -231,11 +229,11 @@
 
     <nav>
         <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#servicos">Serviços</a></li>
-            <li><a href="#pagamentos">Formas de Pagamento</a></li>
-            <li><a href="#contato">Contato</a></li>
-            <li><a href="#links-uteis">Links Úteis</a></li>
+            <li><a href="#home" onclick="showSection('home')">Home</a></li>
+            <li><a href="#servicos" onclick="showSection('servicos')">Serviços</a></li>
+            <li><a href="#pagamentos" onclick="showSection('pagamentos')">Formas de Pagamento</a></li>
+            <li><a href="#links-uteis" onclick="showSection('links-uteis')">Links Úteis</a></li>
+            <li><a href="#contato" onclick="showSection('contato')">Contato</a></li>
         </ul>
     </nav>
 
@@ -256,10 +254,10 @@
     <section id="pagamentos" class="pagamentos">
         <h2>Formas de Pagamento</h2>
         <ul>
-            <li><a href="#" onclick="openPagamentoModal('PIX')">PIX</a></li>
-            <li><a href="#" onclick="openPagamentoModal('Cartão de Crédito')">Cartão de Crédito</a></li>
-            <li><a href="#" onclick="openPagamentoModal('Dinheiro')">Dinheiro</a></li>
-            <li><a href="#" onclick="openPagamentoModal('Boleto')">Boleto</a></li>
+            <li onclick="showPaymentInfo('Pix')">Pix</li>
+            <li onclick="showPaymentInfo('Cartão de Crédito')">Cartão de Crédito</li>
+            <li onclick="showPaymentInfo('Dinheiro')">Dinheiro</li>
+            <li onclick="showPaymentInfo('Boleto')">Boleto</li>
         </ul>
     </section>
 
@@ -278,92 +276,100 @@
             <strong>E-CAC:</strong> <a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank">Clique aqui</a>
         </div>
         <div class="link-item">
-            <strong>Portal MEI:</strong> <a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank">Clique aqui</a>
-        </div>
+                        <strong>Portal MEI:</strong> <a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank">Clique aqui</a>
         </div>
     </section>
 
     <section id="contato" class="contato">
         <h2>Contato</h2>
-        <button class="whatsapp-button" onclick="openWhatsApp()">WhatsApp</button>
-        <button class="fale-conosco-button" onclick="openEmail()">E-mail</button>
+        <p>Se você tem alguma dúvida ou deseja mais informações, entre em contato conosco:</p>
+        <button class="whatsapp-button" onclick="window.open('https://api.whatsapp.com/send?phone=5522997599241', '_blank')">WhatsApp</button>
+        <button class="email-button" onclick="window.open('mailto:dr.servcont@gmail.com')">E-mail</button>
     </section>
+
+    <!-- Modal para serviços -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content">
+            <h2 id="serviceTitle"></h2>
+            <p>Para mais informações informe seu nome:</p>
+            <input type="text" id="clientName" placeholder="Seu Nome">
+            <button onclick="sendWhatsApp()">Enviar para WhatsApp</button>
+            <button onclick="closeServiceModal()">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Mensagens de pagamento -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h2>Informação de Pagamento</h2>
+            <p id="paymentInfo"></p>
+            <button onclick="closePaymentModal()">Fechar</button>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2024 D R Acessoria Contábil. Todos os direitos reservados.</p>
         <div class="social-media">
             <a href="https://www.instagram.com/contabilidade.dr.assessoria?igsh=ZnJ0YzQ3NW5jbnhu" target="_blank">Instagram</a>
+            <a href="https://www.facebook.com/contabilidade.douglasribeiro" target="_blank">Facebook</a>
         </div>
     </footer>
 
-    <!-- Modal para Serviços -->
-    <div id="serviceModal" class="modal">
-        <div class="modal-content">
-            <h3 id="serviceTitle"></h3>
-            <p>Para mais informações, informe seu nome:</p>
-            <input type="text" id="serviceName" placeholder="Digite seu nome">
-            <button onclick="redirectToWhatsApp('service')">Enviar</button>
-            <button onclick="closeModal()">Fechar</button>
-        </div>
-    </div>
-
-    <!-- Modal para Formas de Pagamento -->
-    <div id="pagamentoModal" class="modal">
-        <div class="modal-content pagamento-modal-content">
-            <h3 id="pagamentoTitle"></h3>
-            <p id="pagamentoMessage"></p>
-            <button onclick="closeModal()">Fechar</button>
-        </div>
-    </div>
-
     <script>
-        function openServiceModal(service) {
-            document.getElementById('serviceTitle').innerText = service;
+        function showSection(sectionId) {
+            // Oculta todas as seções
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Mostra a seção selecionada
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.style.display = 'block';
+            }
+        }
+
+        function openServiceModal(serviceName) {
+            document.getElementById('serviceTitle').innerText = serviceName;
             document.getElementById('serviceModal').style.display = 'flex';
         }
 
-        function openPagamentoModal(pagamento) {
-            const messages = {
-                'PIX': 'O pagamento via PIX é rápido e seguro.',
-                'Cartão de Crédito': 'Aceitamos cartões de crédito com parcelamento.',
-                'Dinheiro': 'Pagamento em dinheiro tem desconto.',
-                'Boleto': 'Boleto bancário com vencimento em até 5 dias.'
-            };
-            document.getElementById('pagamentoTitle').innerText = pagamento;
-            document.getElementById('pagamentoMessage').innerText = messages[pagamento];
-            document.getElementById('pagamentoModal').style.display = 'flex';
+        function sendWhatsApp() {
+            const name = document.getElementById('clientName').value;
+            const service = document.getElementById('serviceTitle').innerText;
+            const message = `Olá, meu nome é ${name}. Gostaria de mais informações sobre ${service}.`;
+            const whatsappURL = `https://api.whatsapp.com/send?phone=5522997599241&text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+            closeServiceModal();
         }
 
-        function redirectToWhatsApp(type) {
-            const name = document.getElementById(type === 'service' ? 'serviceName' : 'pagamentoName').value;
-            if (name) {
-                const whatsappNumber = type === 'service' ? '+5522997599241' : '+5522997599241';
-                window.open(`https://wa.me/${whatsappNumber}?text=Olá,%20meu%20nome%20é%20${encodeURIComponent(name)}.%20Gostaria%20de%20mais%20informações%20sobre%20${type === 'service' ? document.getElementById('serviceTitle').innerText : document.getElementById('pagamentoTitle').innerText}`, '_blank');
-                closeModal();
-            } else {
-                alert('Por favor, digite seu nome.');
-            }
-        }
-
-        function openWhatsApp() {
-            window.open('https://wa.me/+5522997599241', '_blank');
-        }
-
-        function openEmail() {
-            window.location.href = 'mailto:dr.servcont@gmail.com';
-        }
-
-        function closeModal() {
+        function closeServiceModal() {
             document.getElementById('serviceModal').style.display = 'none';
-            document.getElementById('pagamentoModal').style.display = 'none';
         }
 
-        window.onclick = function(event) {
-            const modalService = document.getElementById('serviceModal');
-            const modalPagamento = document.getElementById('pagamentoModal');
-            if (event.target === modalService || event.target === modalPagamento) {
-                closeModal();
+        function showPaymentInfo(paymentMethod) {
+            let message = '';
+            switch (paymentMethod) {
+                case 'Pix':
+                    message = 'O Pix é uma forma de pagamento instantâneo, disponível 24 horas por dia.';
+                    break;
+                case 'Cartão de Crédito':
+                    message = 'Aceitamos cartões de crédito com parcelamento em até 12 vezes.';
+                    break;
+                case 'Dinheiro':
+                    message = 'Pagamentos em dinheiro são aceitos com descontos especiais.';
+                    break;
+                case 'Boleto':
+                    message = 'Emitimos boletos para facilitar o pagamento.';
+                    break;
             }
+            document.getElementById('paymentInfo').innerText = message;
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
         }
     </script>
 </body>
