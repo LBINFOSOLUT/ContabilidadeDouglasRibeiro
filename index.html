@@ -75,6 +75,14 @@
             padding: 10px;
         }
 
+        .home p {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
         section {
             padding: 20px;
             text-align: center;
@@ -82,7 +90,7 @@
             margin: 20px 0;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: none; /* Todas as seções ficam ocultas inicialmente */
+            display: none;
         }
 
         .servicos ul {
@@ -158,6 +166,7 @@
             border-radius: 5px;
             color: white;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         .modal-content button:hover {
@@ -217,6 +226,19 @@
             color: #4d4038;
         }
 
+        .close-button {
+            background-color: #d4af37;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .close-button:hover {
+            background-color: #4d4038;
+        }
     </style>
 </head>
 <body>
@@ -239,6 +261,9 @@
 
     <section id="home" class="home">
         <h2>Bem-vindo à D R Acessoria Contábil</h2>
+        <p>Nós, da D R Acessoria Contábil, oferecemos serviços especializados em consultoria fiscal e tributária, contabilidade geral, gestão de folha de pagamento e planejamento tributário. Com uma equipe altamente qualificada e comprometida com o sucesso dos nossos clientes, trabalhamos para proporcionar soluções contábeis eficientes, ajudando você a tomar decisões financeiras com segurança.</p>
+        <p>Nosso compromisso é com a transparência, agilidade e excelência, garantindo que sua empresa esteja sempre em conformidade com as obrigações fiscais e preparada para os desafios do mercado. Atuamos de forma personalizada, para que cada cliente tenha o suporte necessário para crescer e prosperar.</p>
+        <p>Conte conosco para simplificar a sua gestão financeira e focar no que realmente importa: o crescimento do seu negócio.</p>
     </section>
 
     <section id="servicos" class="servicos">
@@ -263,114 +288,105 @@
 
     <section id="links-uteis" class="links-uteis">
         <h2>Links Úteis</h2>
-        <div class="link-item">
-            <strong>Consulta CNPJ:</strong> <a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp" target="_blank">Clique aqui</a>
-        </div>
-        <div class="link-item">
-            <strong>Consulta CPF:</strong> <a href="https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp" target="_blank">Clique aqui</a>
-        </div>
-        <div class="link-item">
-            <strong>Consulta Inscrição Estadual:</strong> <a href="http://www.sintegra.gov.br/" target="_blank">Clique aqui</a>
-        </div>
-        <div class="link-item">
-            <strong>E-CAC:</strong> <a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank">Clique aqui</a>
-        </div>
-        <div class="link-item">
-                        <strong>Portal MEI:</strong> <a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank">Clique aqui</a>
-        </div>
+               <div class="link-item"><a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp" target="_blank">Consulta CNPJ</a></div>
+        <div class="link-item"><a href="https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp" target="_blank">Consulta CPF</a></div>
+        <div class="link-item"><a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank">E-CAC</a></div>
+        <div class="link-item"><a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor/servicos-para-mei" target="_blank">Portal do MEI</a></div>
+        <div class="link-item"><a href="https://www.nfse.gov.br/EmissorNacional/Login?ReturnUrl=%2FEmissorNacional" target="_blank">Emissor NFS- Nacional</a></div>
     </section>
 
     <section id="contato" class="contato">
         <h2>Contato</h2>
-        <p>Se você tem alguma dúvida ou deseja mais informações, entre em contato conosco:</p>
-        <button class="whatsapp-button" onclick="window.open('https://api.whatsapp.com/send?phone=5522997599241', '_blank')">WhatsApp</button>
-        <button class="email-button" onclick="window.open('mailto:dr.servcont@gmail.com')">E-mail</button>
+        <p>Para mais informações, entre em contato conosco!</p>
+        <button class="whatsapp-button" onclick="openWhatsApp()">WhatsApp</button>
+        <button class="email-button" onclick="openEmail()">E-mail</button>
     </section>
-
-    <!-- Modal para serviços -->
-    <div id="serviceModal" class="modal">
-        <div class="modal-content">
-            <h2 id="serviceTitle"></h2>
-            <p>Para mais informações informe seu nome:</p>
-            <input type="text" id="clientName" placeholder="Seu Nome">
-            <button onclick="sendWhatsApp()">Enviar para WhatsApp</button>
-            <button onclick="closeServiceModal()">Fechar</button>
-        </div>
-    </div>
-
-    <!-- Mensagens de pagamento -->
-    <div id="paymentModal" class="modal">
-        <div class="modal-content">
-            <h2>Informação de Pagamento</h2>
-            <p id="paymentInfo"></p>
-            <button onclick="closePaymentModal()">Fechar</button>
-        </div>
-    </div>
 
     <footer>
         <p>&copy; 2024 D R Acessoria Contábil. Todos os direitos reservados.</p>
         <div class="social-media">
-            <a href="https://www.instagram.com/contabilidade.dr.assessoria?igsh=ZnJ0YzQ3NW5jbnhu" target="_blank">Instagram</a>
-            <a href="dr.servcont@gmail.com" target="_blank">E-mail</a>
+            <a href="https://www.instagram.com/contabilidade.dr.assessoria" target="_blank">Instagram</a>
         </div>
     </footer>
 
+    <!-- Modal para serviços -->
+    <div id="service-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="service-title"></h3>
+            <input type="text" id="client-name" placeholder="Digite seu nome">
+            <button onclick="sendWhatsApp()">Enviar para WhatsApp</button>
+            <button class="close-button" onclick="closeModal('service-modal')">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Modal para formas de pagamento -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="payment-title"></h3>
+            <p>Informações sobre a forma de pagamento selecionada.</p>
+            <button class="close-button" onclick="closeModal('payment-modal')">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Modal para links úteis -->
+    <div id="links-modal" class="modal">
+        <div class="modal-content">
+            <h3>Links Úteis</h3>
+            <p>Selecione um link:</p>
+            <div class="link-item"><a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp" target="_blank">Consulta CNPJ</a></div>
+            <div class="link-item"><a href="https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp" target="_blank">Consulta CPF</a></div>
+            <div class="link-item"><a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank">Portal E-cac</a></div>
+            <div class="link-item"><a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor/servicos-para-mei" target="_blank">Portal do MEI</a></div>
+            <button class="close-button" onclick="closeModal('links-modal')">Fechar</button>
+        </div>
+    </div>
+
     <script>
         function showSection(sectionId) {
-            // Oculta todas as seções
             const sections = document.querySelectorAll('section');
             sections.forEach(section => {
                 section.style.display = 'none';
             });
-
-            // Mostra a seção selecionada
-            const activeSection = document.getElementById(sectionId);
-            if (activeSection) {
-                activeSection.style.display = 'block';
-            }
+            document.getElementById(sectionId).style.display = 'block';
         }
 
         function openServiceModal(serviceName) {
-            document.getElementById('serviceTitle').innerText = serviceName;
-            document.getElementById('serviceModal').style.display = 'flex';
+            document.getElementById('service-title').innerText = serviceName;
+            document.getElementById('service-modal').style.display = 'flex';
         }
 
         function sendWhatsApp() {
-            const name = document.getElementById('clientName').value;
-            const service = document.getElementById('serviceTitle').innerText;
-            const message = `Olá, meu nome é ${name}. Gostaria de mais informações sobre ${service}.`;
-            const whatsappURL = `https://api.whatsapp.com/send?phone=5522997599241&text=${encodeURIComponent(message)}`;
-            window.open(whatsappURL, '_blank');
-            closeServiceModal();
-        }
-
-        function closeServiceModal() {
-            document.getElementById('serviceModal').style.display = 'none';
+            const name = document.getElementById('client-name').value;
+            if (name) {
+                const message = encodeURIComponent(`Olá, meu nome é ${name}. Gostaria de mais informações sobre os serviços prestados.`);
+                const whatsappUrl = `https://wa.me/5522999845104?text=${message}`;
+                window.open(whatsappUrl, '_blank');
+                closeModal('service-modal');
+            } else {
+                alert('Por favor, digite seu nome antes de continuar.');
+            }
         }
 
         function showPaymentInfo(paymentMethod) {
-            let message = '';
-            switch (paymentMethod) {
-                case 'Pix':
-                    message = 'O Pix é uma forma de pagamento instantâneo, disponível 24 horas por dia.';
-                    break;
-                case 'Cartão de Crédito':
-                    message = 'Aceitamos cartões de crédito com parcelamento em até 12 vezes.';
-                    break;
-                case 'Dinheiro':
-                    message = 'Pagamentos em dinheiro são aceitos com descontos especiais.';
-                    break;
-                case 'Boleto':
-                    message = 'Emitimos boletos para facilitar o pagamento.';
-                    break;
-            }
-            document.getElementById('paymentInfo').innerText = message;
-            document.getElementById('paymentModal').style.display = 'flex';
+            document.getElementById('payment-title').innerText = `Informações sobre ${paymentMethod}`;
+            document.getElementById('payment-modal').style.display = 'flex';
         }
 
-        function closePaymentModal() {
-            document.getElementById('paymentModal').style.display = 'none';
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
+
+        function openWhatsApp() {
+            window.open('https://wa.me/5522999845104', '_blank');
+        }
+
+        function openEmail() {
+            window.open('mailto:dr.servcont@gmail.com');
+        }
+
+        // Mostra a seção inicial
+        showSection('home');
     </script>
 </body>
 </html>
+
